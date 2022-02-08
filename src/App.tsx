@@ -3,6 +3,8 @@ import * as C from './App.styles';
 import * as Photos from './services/photos';
 import { Photo } from './types/Photo';
 import { PhotoItem } from './components/PhotoItem';
+import { storage } from './libs/firebase';
+import { ref, deleteObject } from 'firebase/storage';
 
 const App = () => {
   const [uploading, setUploading] = useState(false)
@@ -24,12 +26,12 @@ const App = () => {
     const formData = new FormData(e.currentTarget);
     const file = formData.get('image') as File;
 
-    if(file && file.size > 0) {
+    if (file && file.size > 0) {
       setUploading(true);
       let result = await Photos.insert(file);
       setUploading(false);
 
-      if(result instanceof Error) {
+      if (result instanceof Error) {
         alert(`${result.name} - ${result.message}`);
       } else {
         let newPhotoList = [...photos];
@@ -39,6 +41,25 @@ const App = () => {
     }
   }
 
+  console.log(photos);
+
+  const handleDeletePhoto = (name: string) => {
+    let getPhoto = ref(storage, `images/${name}`);
+    let newList = [...photos];
+
+    deleteObject(getPhoto)
+      .then(() => {
+        let indexPhotoList = photos.map(item => item.name).indexOf(name);
+
+        indexPhotoList > -1 && 
+          newList.splice(indexPhotoList, 1) &&
+            setPhotos(newList);
+        
+      })
+      .catch((error) => alert(error))
+
+  }
+
   return (
     <C.Container>
       <C.Area>
@@ -46,7 +67,10 @@ const App = () => {
 
         <C.UploadForm method="POST" onSubmit={handleFormSubmit}>
           <input type="file" name="image" />
-          <input type="submit" value="Enviar"/>
+          <input type="submit" value="Enviar" />
+          {uploading &&
+            <span>Carregando imagem... ⌛</span>
+          }
         </C.UploadForm>
 
         {loading &&
@@ -59,7 +83,7 @@ const App = () => {
         {!loading && photos.length > 0 &&
           <C.PhotoList>
             {photos.map((item, index) =>
-              <PhotoItem key={index} url={item.url} name={item.name} />
+              <PhotoItem key={index} url={item.url} name={item.name} onDelete={handleDeletePhoto} />
             )}
           </C.PhotoList>
         }

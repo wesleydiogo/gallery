@@ -1,6 +1,6 @@
 import { Photo } from '../types/Photo';
 import { storage } from '../libs/firebase';
-import { ref, listAll, getDownloadURL, uploadBytes } from 'firebase/storage';
+import { ref, listAll, getDownloadURL, uploadBytes, deleteObject } from 'firebase/storage';
 import { v4 as createId } from 'uuid';
 
 export const getAll = async () => {
