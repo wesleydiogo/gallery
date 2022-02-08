@@ -26,9 +26,14 @@ export const Loading = styled.div`
     }
 `;
 export const PhotoList = styled.div`
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 10px;
+    background-color: #3D3F43;
+    border-radius: 10px;
+    display: flex;
+    align-items: end;
+    flex-wrap: wrap;
+    // gap: 5px;
+    // display: grid;
+    // grid-template-columns: repeat(4, 1fr);
 `;
 export const UploadForm = styled.form`
     background-color: #3D3F43;
@@ -45,9 +50,11 @@ export const UploadForm = styled.form`
         border-radius: 10px;
         margin: 0 20px;
         cursor: pointer;
+        transform: scale(.9);
+        transition: all ease .2s;
 
         &:hover {
-            opacity: .9;
+            transform: scale(1);
         }
     }
 `;

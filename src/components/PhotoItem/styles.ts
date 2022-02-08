@@ -1,11 +1,13 @@
 import styled from 'styled-components';
 
 export const Container = styled.div`
-    background-color: #3D3F43;
-    border-radius: 10px;
+    // background-color: #3D3F43;
+    // border-radius: 10px;
     padding: 10px;
     display: flex;
     flex-direction: column;
+    max-width: 200px;
+    transition: all ease .2s;
 
     img {
         max-width: 100%;
@@ -24,7 +26,7 @@ export const Container = styled.div`
         border: 0;
         border-radius: 10px;
         cursor: pointer;
-        transition: all ease .4s;
+        transition: all ease .2s;
         transform: scale(.9);
         
         &:hover {
