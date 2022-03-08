@@ -1,14 +1,19 @@
-import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
-import reportWebVitals from './reportWebVitals';
+import { AuthContextProvider } from './contexts/auth';
+import { ThemeContextProvider } from './contexts/theme';
+import { Container } from './components';
+
+const rootElement = document.getElementById('root');
 
 ReactDOM.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>,
-  document.getElementById('root')
-)
-
-reportWebVitals();
+    <AuthContextProvider>
+      <ThemeContextProvider>
+        <Container>
+          <App />
+        </Container>
+      </ThemeContextProvider>
+    </AuthContextProvider>,
+  rootElement
+);
